@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Assistant ✈️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-plane-departure"></i>
+                <h1>AI Travel Assistant</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="#chat" class="nav-link active"><i class="fas fa-robot"></i> AI Chat</a>
+                <a href="#planner" class="nav-link"><i class="fas fa-map-marked-alt"></i> Trip Planner</a>
+                <a href="#flights" class="nav-link"><i class="fas fa-plane"></i> Flights</a>
+                <a href="#hotels" class="nav-link"><i class="fas fa-bed"></i> Hotels</a>
+            </div>
+            <button class="btn-login">
+                <i class="fas fa-user"></i> Sign In
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Plan Your Perfect Trip with AI ✨</h1>
+            <p class="hero-subtitle">Intelligent itinerary planning, cost estimation, and personalized recommendations powered by artificial intelligence.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <i class="fas fa-users"></i>
+                    <span>1,000+ Trips Planned</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-star"></i>
+                    <span>4.9/5 Rating</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-globe"></i>
+                    <span>50+ Countries</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-element">
+                <i class="fas fa-comments"></i>
+                <p>"This AI saved me hours of planning!"</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- AI Chat Interface -->
+        <section id="chat" class="section active">
+            <div class="section-header">
+                <h2><i class="fas fa-robot"></i> AI Travel Assistant</h2>
+                <p>Chat with our AI to get personalized travel advice</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-ai-info">
+                        <div class="ai-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h3>Travel AI Assistant</h3>
+                            <p class="ai-status"><span class="status-dot online"></span> Online</p>
+                        </div>
+                    </div>
+                    <button class="btn-clear" onclick="clearChat()">
+                        <i class="fas fa-trash"></i> Clear Chat
+                    </button>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will appear here -->
+                    <div class="message ai-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Hello! I'm your AI travel assistant. I can help you:
+                                <ul>
+                                    <li>Plan trips and create itineraries</li>
+                                    <li>Find flights and hotels</li>
+                                    <li>Suggest activities and restaurants</li>
+                                    <li>Provide travel tips and recommendations</li>
+                                </ul>
+                                How can I assist you today?
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="quick-suggestions">
+                        <button class="quick-suggestion" onclick="sendSuggestion('Plan a trip to Paris')">
+                            <i class="fas fa-map-pin"></i> Paris Trip
+                        </button>
+                        <button class="quick-suggestion" onclick="sendSuggestion('Find cheap flights to Tokyo')">
+                            <i class="fas fa-plane"></i> Tokyo Flights
+                        </button>
+                        <button class="quick-suggestion" onclick="sendSuggestion('Beach vacation recommendations')">
+                            <i class="fas fa-umbrella-beach"></i> Beach Vacation
+                        </button>
+                        <button class="quick-suggestion" onclick="sendSuggestion('Packing tips for Europe')">
+                            <i class="fas fa-suitcase"></i> Packing Tips
+                        </button>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="chatInput"
+                            placeholder="Ask about destinations, planning, or anything travel-related..."
+                            onkeypress="if(event.key === 'Enter') sendMessage()"
+                        >
+                        <button class="btn-send" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <div class="input-footer">
+                        <small><i class="fas fa-lightbulb"></i> Try: "Plan a 5-day trip to Japan" or "Best time to visit Italy"</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trip Planner Form -->
+        <section id="planner" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-compass"></i> AI Trip Planner</h2>
+                <p>Generate detailed itineraries with intelligent recommendations</p>
+            </div>
+
+            <div class="planner-container">
+                <div class="planner-form-card">
+                    <div class="form-header">
+                        <h3>Trip Details</h3>
+                        <p>Fill in your preferences and let AI create the perfect plan</p>
+                    </div>
+
+                    <form id="tripForm" onsubmit="planTrip(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="destination">
+                                    <i class="fas fa-map-marker-alt"></i> Destination
+                                </label>
+                                <input
+                                    type="text"
+                                    id="destination"
+                                    placeholder="Where do you want to go?"
+                                    value="Tokyo"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tripType">
+                                    <i class="fas fa-tag"></i> Trip Type
+                                </label>
+                                <select id="tripType">
+                                    <option value="leisure">Leisure/Vacation</option>
+                                    <option value="business">Business</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="romantic">Romantic Getaway</option>
+                                    <option value="family">Family Trip</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="startDate">
+                                    <i class="fas fa-calendar-alt"></i> Start Date
+                                </label>
+                                <input
+                                    type="date"
+                                    id="startDate"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="duration">
+                                    <i class="fas fa-clock"></i> Duration (Days)
+                                </label>
+                                <div class="range-container">
+                                    <input
+                                        type="range"
+                                        id="duration"
+                                        min="1"
+                                        max="30"
+                                        value="5"
+                                        oninput="updateDurationValue(this.value)"
+                                    >
+                                    <span id="durationValue">5 days</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="budget">
+                                    <i class="fas fa-dollar-sign"></i> Budget ($)
+                                </label>
+                                <div class="budget-options">
+                                    <div class="budget-option" onclick="selectBudget(500)">
+                                        <span>$500</span>
+                                        <small>Budget</small>
+                                    </div>
+                                    <div class="budget-option active" onclick="selectBudget(1500)">
+                                        <span>$1,500</span>
+                                        <small>Moderate</small>
+                                    </div>
+                                    <div class="budget-option" onclick="selectBudget(3000)">
+                                        <span>$3,000</span>
+                                        <small>Luxury</small>
+                                    </div>
+                                    <div class="budget-option" onclick="selectBudget(5000)">
+                                        <span>$5,000+</span>
+                                        <small>Premium</small>
+                                    </div>
+                                </div>
+                                <input
+                                    type="number"
+                                    id="budget"
+                                    placeholder="Or enter custom amount"
+                                    value="1500"
+                                    min="100"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="travelers">
+                                    <i class="fas fa-user-friends"></i> Travelers
+                                </label>
+                                <div class="traveler-selector">
+                                    <button type="button" class="btn-counter" onclick="adjustTravelers(-1)">-</button>
+                                    <span id="travelerCount">2</span>
+                                    <button type="button" class="btn-counter" onclick="adjustTravelers(1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interests">
+                                <i class="fas fa-heart"></i> Interests & Preferences
+                            </label>
+                            <div class="interest-tags">
+                                <span class="interest-tag" onclick="toggleInterest(this)">🍜 Food & Dining</span>
+                                <span class="interest-tag" onclick="toggleInterest(this)">🏛️ History & Culture</span>
+                                <span class="interest-tag active" onclick="toggleInterest(this)">🏖️ Beaches</span>
+                                <span class="interest-tag" onclick="toggleInterest(this)">🛍️ Shopping</span>
+                                <span class="interest-tag active" onclick="toggleInterest(this)">🌳 Nature</span>
+                                <span class="interest-tag" onclick="toggleInterest(this)">🎭 Nightlife</span>
+                                <span class="interest-tag" onclick="toggleInterest(this)">🎨 Arts & Museums</span>
+                                <span class="interest-tag" onclick="toggleInterest(this)">🚴 Adventure Sports</span>
+                            </div>
+                            <textarea
+                                id="additionalNotes"
+                                placeholder="Any specific requirements or special requests..."
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-brain"></i> Generate AI-Powered Itinerary
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="planner-results-card" id="tripResults">
+                    <div class="results-placeholder">
+                        <div class="placeholder-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3>Your Itinerary Awaits</h3>
+                        <p>Fill in your trip details and click "Generate" to create a personalized itinerary powered by AI.</p>
+                        <div class="placeholder-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Detailed day-by-day schedule</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cost breakdown and budgeting</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Personalized recommendations</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Booking suggestions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>Why Choose AI Travel Assistant?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Planning</h3>
+                    <p>Generate complete itineraries in seconds instead of hours of research.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Intelligent recommendations based on millions of travel data points.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Cost Optimization</h3>
+                    <p>Smart budgeting and cost-saving suggestions for your entire trip.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Ready</h3>
+                    <p>Access your plans anywhere with our mobile-friendly interface.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <i class="fas fa-plane-departure"></i>
+                <h3>AI Travel Assistant</h3>
+                <p>Making travel planning smarter, faster, and easier.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#chat">AI Chat</a>
+                <a href="#planner">Trip Planner</a>
+                <a href="#flights">Flights</a>
+                <a href="#hotels">Hotels</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 AI Travel Assistant. All rights reserved.</p>
+            <p>Built with ❤️ using FastAPI & AI</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+
+    <script>
+        // Initialize dates
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+
+            document.getElementById('startDate').valueAsDate = nextWeek;
+            updateDurationValue(5);
+
+            // Load sample chat
+            setTimeout(() => {
+                addSampleMessages();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
